@@ -8,6 +8,7 @@ module Attra
 
     attr_accessor \
       :url,
+      :uri,
       :farm_name,
       :city,
       :state,
@@ -26,11 +27,23 @@ module Attra
     }
 
     def initialize(url)
-      uri = URI.parse(url)
-      qs  = CGI::parse(uri.query)
+      self.url = url
+      self.uri = URI.parse(url)
+
+      qs  = CGI::parse(self.uri.query)
       QS_KEYS.each do |k,v|
         instance_variable_set("@#{k}", qs[QS_KEYS[k]].first)
       end
+    end
+
+    def next_url
+      next_uri = self.uri.dup
+      next_uri.query = QS_KEYS.collect do |attribute, qs_key|
+        value = instance_variable_get("@#{attribute}")
+        value = value.blank? ? 2 : value.to_i + 1 if attribute == :page
+        "#{qs_key}=#{value}"
+      end.join("&")
+      return next_uri.to_s
     end
 
   end
