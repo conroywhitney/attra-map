@@ -16,14 +16,13 @@ module Attra
       :all_date,
       :page
 
-
     QS_KEYS = {
       farm_name: "FarmName",
-      city: "City",
-      state: "State",
-      keyword: "Keyword",
-      all_date: "allDate",
-      page: "page"
+      city:      "City",
+      state:     "State",
+      keyword:   "Keyword",
+      all_date:  "allDate",
+      page:      "page"
     }
 
     def initialize(url)
@@ -36,10 +35,12 @@ module Attra
       end
     end
 
+    # for wombat
     def base_url
       return self.url.split(".org").first + ".org"
     end
 
+    # for wombat
     def path
       return self.url.split(".org").last
     end
@@ -58,22 +59,30 @@ module Attra
       return next_uri.to_s
     end
 
-    def results
+    def listings
+      # you can't send instance varialbes into Wombat block
       options = {
         base_url: self.base_url,
         path:     self.path
       }
+
       results = Wombat.crawl do
         base_url options[:base_url]
-        path options[:page]
+        path options[:path]
 
-        listings 'xpath=//*[@id="main_content"]/table', :iterator do |item|
-          puts "\n\nZOMG #{item}\n\n"
-          url { "xpath=./tbody/tr/td/strong/a/@href" }
+        # loop through all tables and pull out details urls
+        listings "xpath=//div[@id='main_content']//table", :iterator do
+          name({  xpath: "*//strong" })
+          url({   xpath: "*//a/@href" })
         end
       end
-      puts results
-      return results
+
+      # clean results from messy DOM structure
+      return results["listings"].collect do |listing|
+        listing["url"]
+      end.select do |url|
+        url.present? && url.include?("farmdetails.php")
+      end
     end
 
   end

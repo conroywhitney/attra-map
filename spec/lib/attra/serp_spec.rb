@@ -92,14 +92,22 @@ describe Attra::Serp do
 
   end
 
-  context "results" do
+  context "listings" do
 
     before(:each) do
       @serp = Attra::Serp.new("https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&Go=Go")
     end
 
     it "should not error out" do
-      expect { @serp.results }.to_not raise_error
+      expect { @serp.listings }.to_not raise_error
+    end
+
+    it "should return 15 listings" do
+      expect(@serp.listings.size).to eq 15
+    end
+
+    it "should return urls" do
+      expect(@serp.listings.first.include?("farmdetails.php")).to be true
     end
 
   end
