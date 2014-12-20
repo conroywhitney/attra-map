@@ -1,0 +1,5 @@
+=Farming Apprenticeships
+
+The [Sustainable Farming Internships and Apprenticeships](https://attra.ncat.org/attra-pub/internships/index.php) is a great resource to find farms. However, I personally find it a little bit difficult to navigate the thousands of opportunities with that interface.
+
+This project is to crawl ATTRA and present the same data in a slightly more user friendly manner. In some ways, this is a selfish project just for myself; but I also hope that this will help others to follow through with their interest in a farm apprenticehip.
