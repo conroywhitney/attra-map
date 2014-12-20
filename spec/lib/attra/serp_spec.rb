@@ -76,4 +76,32 @@ describe Attra::Serp do
 
   end
 
+  context "url splits base/path" do
+
+    before(:each) do
+      @serp = Attra::Serp.new("https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&Go=Go")
+    end
+
+    it "should find base_url" do
+      expect(@serp.base_url).to eq "https://attra.ncat.org"
+    end
+
+    it "should find path" do
+      expect(@serp.path).to eq "/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&Go=Go"
+    end
+
+  end
+
+  context "results" do
+
+    before(:each) do
+      @serp = Attra::Serp.new("https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&Go=Go")
+    end
+
+    it "should not error out" do
+      expect { @serp.results }.to_not raise_error
+    end
+
+  end
+
 end

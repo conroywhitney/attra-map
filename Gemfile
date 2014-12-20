@@ -17,7 +17,8 @@ gem 'pg'
 gem 'algoliasearch-rails'
 
 # crawling
-#gem 'wombat'
+gem 'mechanize'
+gem 'wombat'
 
 # testing
 group :development, :test do
