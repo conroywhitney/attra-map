@@ -12,6 +12,26 @@ describe Attra::Listing do
 
   end
 
+  context "initialization" do
+    context "url" do
+
+      before(:each) do
+        @listing = Attra::Listing.new(ROGUE_FARMS)
+      end
+
+      it "should add on directory if not included" do
+        url = "farmdetails.php?FarmName=&City=&State=OR&Keyword=&allDate=0&page=1&FarmID=3391"
+        expect(Attra::Listing.new(url).url).to eq ROGUE_FARMS
+      end
+
+      it "should not add on directory if already included" do
+        url = "attra-pub/internships/farmdetails.php?FarmName=&City=&State=OR&Keyword=&allDate=0&page=1&FarmID=3391"
+        expect(Attra::Listing.new(url).url).to eq ROGUE_FARMS
+      end
+
+    end
+  end
+
   context "query string" do
     context "parsing" do
 

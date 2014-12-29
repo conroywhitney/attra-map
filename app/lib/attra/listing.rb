@@ -33,6 +33,10 @@ module Attra
       :housing,
       :internship_details
 
+    def initialize(url)
+      url = "attra-pub/internships/#{url}" unless url.include?("attra-pub/internships/")
+      super(url)
+    end
 
     def self.qs_keys
       return {
@@ -70,7 +74,13 @@ module Attra
     end
 
     def crawl!
+      begin
       doc = Nokogiri::HTML(open(self.url))
+      rescue OpenURI::HTTPError => e
+        puts "Error opening [#{self.url}]: [#{e.message}]"
+        raise e
+      end
+
       base_xpath = "//div[@id='main_content']//table//tr[1]//td//table//tr//td"
 
       details  = doc.xpath("#{base_xpath}")
