@@ -19,6 +19,7 @@ gem 'algoliasearch-rails'
 # crawling
 gem 'mechanize'
 gem 'wombat'
+gem 'nokogiri'
 
 # testing
 group :development, :test do

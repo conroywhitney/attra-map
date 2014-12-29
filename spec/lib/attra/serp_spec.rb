@@ -46,22 +46,6 @@ describe Attra::Serp do
 
   end
 
-  context "uri" do
-
-    before(:each) do
-      @serp = Attra::Serp.new("https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&page=2")
-    end
-
-    it "should return a URI object" do
-      expect(@serp.uri.class).to eq URI::HTTPS
-    end
-
-    it "should become a url string again" do
-      expect(@serp.uri.to_s).to eq @serp.url
-    end
-
-  end
-
   context "pagination" do
 
     it "should handle no page number" do
@@ -72,22 +56,6 @@ describe Attra::Serp do
     it "should handle existing page number" do
       @serp = Attra::Serp.new("https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&page=2")
       expect(@serp.next_url).to eq "https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&page=3"
-    end
-
-  end
-
-  context "url splits base/path" do
-
-    before(:each) do
-      @serp = Attra::Serp.new("https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&Go=Go")
-    end
-
-    it "should find base_url" do
-      expect(@serp.base_url).to eq "https://attra.ncat.org"
-    end
-
-    it "should find path" do
-      expect(@serp.path).to eq "/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&Go=Go"
     end
 
   end

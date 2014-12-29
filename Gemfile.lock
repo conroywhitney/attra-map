@@ -208,6 +208,7 @@ DEPENDENCIES
   foreman
   launchy (>= 2.1.2)
   mechanize
+  nokogiri
   pg
   quiet_assets (>= 1.0.1)
   rails (~> 3)
