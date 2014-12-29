@@ -112,7 +112,7 @@ module Attra
     end
 
     def parse_address(str)
-      self.address = str
+      self.address = str.strip
     end
 
     def parse_city_state_zip(csz)

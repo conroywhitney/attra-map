@@ -61,6 +61,11 @@ describe Attra::Listing do
       expect(@listing.address).to eq "123 Fake St"
     end
 
+    it "should trim newlines" do
+      @listing.parse_address("\nPO Box 533\n")
+      expect(@listing.address).to eq "PO Box 533"
+    end
+
   end
 
   context "parse_city_state_zip" do
@@ -129,8 +134,24 @@ describe Attra::Listing do
       expect { @listing.crawl! }.to_not raise_error
     end
 
-    it "should actually find content" do
+    it "should set title" do
       expect(@listing.title).to eq "Rogue Farm Corps- FarmsNOW Program"
+    end
+
+    it "should set address" do
+      expect(@listing.address).to eq "PO Box 533"
+    end
+
+    it "should set city" do
+      expect(@listing.city).to eq "Ashland"
+    end
+
+    it "should set state" do
+      expect(@listing.state).to eq "OR"
+    end
+
+    it "should set zip" do
+      expect(@listing.zip).to eq "97520"
     end
 
   end
