@@ -112,9 +112,9 @@ module Attra
     end
 
     def concatenate_attribute(attribute, element)
-      val = instance_variable_get("@#{k}") || ""
+      val = instance_variable_get("@#{attribute}") || ""
       val += " " + element.to_s
-      instance_variable_set("@#{k}", val)
+      instance_variable_set("@#{attribute}", val.strip)
     end
 
     def raise_unknown_error(element)

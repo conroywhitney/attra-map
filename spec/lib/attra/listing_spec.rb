@@ -50,6 +50,35 @@ describe Attra::Listing do
 
   end
 
+  context "concatenate_attribute" do
+
+    before(:each) do
+      @listing = Attra::Listing.new(ROGUE_FARMS)
+    end
+
+    it "should handle nil initially" do
+      @listing.website = nil
+      @listing.concatenate_attribute(:website, "testing")
+      expect(@listing.website).to eq "testing"
+    end
+
+    it "should handle blank initially" do
+      @listing.website = ""
+      @listing.concatenate_attribute(:website, "testing")
+      expect(@listing.website).to eq "testing"
+    end
+
+    it "should handle multiples" do
+      @listing.website = nil
+      @listing.concatenate_attribute(:website, "testing")
+      @listing.concatenate_attribute(:website, "one")
+      @listing.concatenate_attribute(:website, "two")
+      @listing.concatenate_attribute(:website, "three")
+      expect(@listing.website).to eq "testing one two three"
+    end
+
+  end
+
   context "crawling" do
 
     before(:each) do
