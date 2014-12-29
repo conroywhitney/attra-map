@@ -12,4 +12,18 @@ describe Attra::Listing do
 
   end
 
+  context "query string" do
+    context "parsing" do
+
+      before(:each) do
+        @listing = Attra::Listing.new(ROGUE_FARMS)
+      end
+
+      it "should capture attra id" do
+        expect(@listing.attra_id).to eq "3391"
+      end
+
+    end
+  end
+
 end

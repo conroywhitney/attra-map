@@ -6,7 +6,7 @@ module Attra
     # https://attra.ncat.org/attra-pub/internships/farmdetails.php?FarmName=&City=&State=OR&Keyword=&allDate=0&page=1&FarmID=3391
 
     attr_accessor \
-      :id,
+      :attra_id,
       :title,
       :address,
       :city,
@@ -33,7 +33,7 @@ module Attra
 
     def self.qs_keys
       return {
-        farm_id:   "FarmID",
+        attra_id:  "FarmID",
         farm_name: "FarmName",
         city:      "City",
         state:     "State",
