@@ -36,9 +36,8 @@ describe Attra::Listing do
       expect { @listing.details }.to_not raise_error
     end
 
-    @wip
     it "should actually find content" do
-      expect(@listing.details.size).to eq -1
+      expect(@listing.details["title"]).to eq "Rogue Farm Corps- FarmsNOW Program"
     end
 
   end

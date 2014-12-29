@@ -47,26 +47,18 @@ module Attra
       # you can't send instance varialbes into Wombat block
       options = {
         base_url: self.base_url,
-        path:     self.path
+        path:     self.path,
+        xpath:    "xpath=//div[@id='main_content']//table//tr[1]//td//table//tr//td"
       }
 
       results = Wombat.crawl do
         base_url options[:base_url]
         path options[:path]
 
-        # loop through all tables and pull out details urls
-        listings "xpath=//div[@id='main_content']//table", :iterator do
-          name({  xpath: "*//strong" })
-          url({   xpath: "*//a/@href" })
-        end
+        title "#{options[:xpath]}//strong[1]"
       end
 
-      # clean results from messy DOM structure
-      return results["listings"].collect do |listing|
-        listing["url"]
-      end.select do |url|
-        url.present? && url.include?("farmdetails.php")
-      end
+      return results
     end
 
   end
