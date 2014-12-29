@@ -26,18 +26,19 @@ describe Attra::Listing do
     end
   end
 
-  context "details" do
+  context "crawling" do
 
     before(:each) do
       @listing = Attra::Listing.new(ROGUE_FARMS)
+      @listing.crawl!
     end
 
     it "should not error out" do
-      expect { @listing.details }.to_not raise_error
+      expect { @listing.crawl! }.to_not raise_error
     end
 
     it "should actually find content" do
-      expect(@listing.details["title"]).to eq "Rogue Farm Corps- FarmsNOW Program"
+      expect(@listing.title).to eq "Rogue Farm Corps- FarmsNOW Program"
     end
 
   end

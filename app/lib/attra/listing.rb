@@ -1,4 +1,6 @@
 require 'cgi'
+require 'nokogiri'
+require 'open-uri'
 
 module Attra
   class Listing < Attra::Page
@@ -15,6 +17,7 @@ module Attra
       :contact,
       :contact_phones,
       :contact_emails,
+      :contact_method,
       :website,
       :updated_on,
       :description,
@@ -43,22 +46,23 @@ module Attra
       }
     end
 
-    def details
-      # you can't send instance varialbes into Wombat block
-      options = {
-        base_url: self.base_url,
-        path:     self.path,
-        xpath:    "xpath=//div[@id='main_content']//table//tr[1]//td//table//tr//td"
-      }
+    def crawl!
+      doc = Nokogiri::HTML(open(self.url))
+      base_xpath = "//div[@id='main_content']//table//tr[1]//td//table//tr//td"
 
-      results = Wombat.crawl do
-        base_url options[:base_url]
-        path options[:path]
+      sections = doc.xpath("#{base_xpath}//strong")
 
-        title "#{options[:xpath]}//strong[1]"
+      self.title = sections.shift.content
+
+      sections.each_with_index do |section, i|
+        #puts "Section [#{section.content}] = Content [#{section.next.content}]"
       end
 
-      return results
+      return nil
+    end
+
+    def collect_between(first, last)
+      first == last ? [first] : [first, *collect_between(first.next, last)]
     end
 
   end
