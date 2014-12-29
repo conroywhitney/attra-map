@@ -73,13 +73,12 @@ module Attra
       doc = Nokogiri::HTML(open(self.url))
       base_xpath = "//div[@id='main_content']//table//tr[1]//td//table//tr//td"
 
-      details  = doc.xpath("#{base_xpath}")
-      sections = details.xpath(".//strong")
+      details  = doc.xpath("#{base_xpath}//*")
+      sections = details.xpath("#{base_xpath}//strong")
 
       self.title = sections.shift.content
 
       current_attribute = nil
-      current_value = []
       details.each do |element|
         case element.class
         when Nokogiri::XML::Text
@@ -94,7 +93,8 @@ module Attra
           end
           raise_unknown_error(element)
         else
-          raise_unknown_error(element)
+          # skip
+          #raise_unknown_error(element)
         end
       end
 
@@ -118,7 +118,7 @@ module Attra
     end
 
     def raise_unknown_error(element)
-      #raise "Unsure how to handle element: [#{element}]"
+      raise "Unsure how to handle element: [#{element}]"
     end
 
     def parse(content, section)
