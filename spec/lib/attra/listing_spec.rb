@@ -90,12 +90,9 @@ describe Attra::Listing do
 
   context "parse_city_state_zip" do
 
-    before(:each) do
-      @listing = Attra::Listing.new(ROGUE_FARMS)
-    end
-
     context "in a perfect world" do
       before(:each) do
+        @listing = Attra::Listing.new(ROGUE_FARMS)
         @listing.parse_city_state_zip("Asheville, NC 28803")
       end
 
@@ -109,6 +106,25 @@ describe Attra::Listing do
 
       it "should set the zip attribute" do
         expect(@listing.zip).to eq "28803"
+      end
+    end
+
+    context "when city has more than one word" do
+      before(:each) do
+        @listing = Attra::Listing.new("https://attra.ncat.org/attra-pub/internships/farmdetails.php?FarmName=&City=&State=WA&Keyword=&allDate=0&page=1&FarmID=1620")
+        @listing.crawl!
+      end
+
+      it "should set the city attribute" do
+        expect(@listing.city).to eq "Vashon Island"
+      end
+
+      it "should set the state attribute" do
+        expect(@listing.state).to eq "WA"
+      end
+
+      it "should set the zip attribute" do
+        expect(@listing.zip).to eq "98070"
       end
     end
 

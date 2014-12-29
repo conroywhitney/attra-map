@@ -130,10 +130,12 @@ module Attra
     end
 
     def parse_city_state_zip(csz)
-      arr        = csz.split(/ |,/).collect{|e| e.strip}.select{|e| e.length > 0}
-      self.city  = arr[0]
-      self.state = arr[1]
-      self.zip   = arr[2]
+      csz        = csz.strip
+      csz        = csz.split(", ")
+      self.city  = csz.first
+      csz        = csz.last.split(" ")
+      self.state = csz.first
+      self.zip   = csz.last
     end
 
     def get_attribute_from_element(element)
