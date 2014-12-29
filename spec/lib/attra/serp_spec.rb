@@ -60,6 +60,18 @@ describe Attra::Serp do
 
   end
 
+  context "valid" do
+
+    it "should return true for normal page" do
+      expect(Attra::Serp.new("https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&page=4").valid?).to eq true
+    end
+
+    it "should return false for high number page" do
+      expect(Attra::Serp.new("https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&page=4000").valid?).to eq false
+    end
+
+  end
+
   context "listings" do
 
     before(:each) do

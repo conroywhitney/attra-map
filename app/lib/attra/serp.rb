@@ -1,3 +1,5 @@
+require 'nokogiri'
+require 'open-uri'
 require 'cgi'
 
 module Attra
@@ -23,6 +25,10 @@ module Attra
         all_date:  "allDate",
         page:      "page"
       }
+    end
+
+    def valid?
+      self.listings.count > 0
     end
 
     def next_url
