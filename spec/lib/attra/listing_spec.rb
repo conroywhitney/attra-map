@@ -94,6 +94,17 @@ describe Attra::Listing do
 
   end
 
+  context "full address" do
+    before(:each) do
+      @listing = Attra::Listing.new(ROGUE_FARMS)
+      @listing.crawl!
+    end
+
+    it "should concatenate address and city when there" do
+      expect(@listing.full_address).to eq "PO Box 533, Ashland, OR, 97520"
+    end
+  end
+
   context "concatenate_attribute" do
 
     before(:each) do

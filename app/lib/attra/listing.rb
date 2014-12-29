@@ -111,6 +111,10 @@ module Attra
       return nil
     end
 
+    def full_address
+      [self.address, self.city, self.state, self.zip].reject{|e| e.nil?}.join(", ")
+    end
+
     def parse_address(str)
       self.address = str.strip
     end
