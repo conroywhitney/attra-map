@@ -1,11 +1,15 @@
 module Attra
   class Page
 
+    DOMAIN = "attra.ncat.org"
+
     attr_accessor \
       :url,
       :uri
 
     def initialize(url)
+      url = "https://#{DOMAIN}/#{url}" unless url.include?("http")
+
       self.url = url
       self.uri = URI.parse(url)
 

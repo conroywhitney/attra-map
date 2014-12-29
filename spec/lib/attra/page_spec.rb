@@ -10,6 +10,18 @@ describe Attra::Page do
 
   end
 
+  context "initialization" do
+    it "should add domain on if not already there" do
+      url = "farmdetails.php?FarmName=&City=&State=&Keyword=&allDate=1&page=1&FarmID=3250"
+      expect(Attra::Page.new(url).url).to eq "https://attra.ncat.org/#{url}"
+    end
+
+    it "should not add domain if already there" do
+      url = "https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&page=2"
+      expect(Attra::Page.new(url).url).to eq url
+    end
+  end
+
   context "uri" do
 
     before(:each) do
