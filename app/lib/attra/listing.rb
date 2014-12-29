@@ -73,17 +73,27 @@ module Attra
       doc = Nokogiri::HTML(open(self.url))
       base_xpath = "//div[@id='main_content']//table//tr[1]//td//table//tr//td"
 
-      details  = doc.xpath("#{base_xpath}//*")
-      sections = details.xpath("#{base_xpath}//strong")
+      details  = doc.xpath("#{base_xpath}")
+      sections = details.xpath(".//strong")
 
       self.title = sections.shift.content
 
       current_attribute = nil
-      details.each do |element|
+      details.children.each do |element|
+        #puts "children [#{element}] (next[#{element.next.to_s}])"
+
+        case element.to_s
+        when "<!-- ADDR1 -->"
+          parse_address(element.next.to_s)
+        when "<!-- City, State, Zip, ZipPlus -->"
+          parse_city_state_zip(element.next.to_s)
+        end
+
         case element.class
         when Nokogiri::XML::Text
           concatenate_attribute(current_attribute, element)
         when Nokogiri::XML::Comment
+          puts "\n\n\nSARLKSJERSDF\n\n"
         when Nokogiri::XML::Element
           case element.name
           when "br"
@@ -98,12 +108,18 @@ module Attra
         end
       end
 
-      0.upto(sections.length - 1) do |i|
-        elements = collect_between(sections[i], sections[i + 1])
-        #puts "Section [#{sections[i]}] = [#{elements}]"
-      end
-
       return nil
+    end
+
+    def parse_address(str)
+      self.address = str
+    end
+
+    def parse_city_state_zip(csz)
+      arr        = csz.split(/ |,/).collect{|e| e.strip}.select{|e| e.length > 0}
+      self.city  = arr[0]
+      self.state = arr[1]
+      self.zip   = arr[2]
     end
 
     def get_attribute_from_element(element)
@@ -119,10 +135,6 @@ module Attra
 
     def raise_unknown_error(element)
       raise "Unsure how to handle element: [#{element}]"
-    end
-
-    def parse(content, section)
-      puts content.to_s
     end
 
     def content_between(first, last)

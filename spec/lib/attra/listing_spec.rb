@@ -50,6 +50,45 @@ describe Attra::Listing do
 
   end
 
+  context "parse_address" do
+
+    before(:each) do
+      @listing = Attra::Listing.new(ROGUE_FARMS)
+    end
+
+    it "should set the address attribute" do
+      @listing.parse_address("123 Fake St")
+      expect(@listing.address).to eq "123 Fake St"
+    end
+
+  end
+
+  context "parse_city_state_zip" do
+
+    before(:each) do
+      @listing = Attra::Listing.new(ROGUE_FARMS)
+    end
+
+    context "in a perfect world" do
+      before(:each) do
+        @listing.parse_city_state_zip("Asheville, NC 28803")
+      end
+
+      it "should set the city attribute" do
+        expect(@listing.city).to eq "Asheville"
+      end
+
+      it "should set the state attribute" do
+        expect(@listing.state).to eq "NC"
+      end
+
+      it "should set the zip attribute" do
+        expect(@listing.zip).to eq "28803"
+      end
+    end
+
+  end
+
   context "concatenate_attribute" do
 
     before(:each) do
