@@ -26,4 +26,21 @@ describe Attra::Listing do
     end
   end
 
+  context "details" do
+
+    before(:each) do
+      @listing = Attra::Listing.new(ROGUE_FARMS)
+    end
+
+    it "should not error out" do
+      expect { @listing.details }.to_not raise_error
+    end
+
+    @wip
+    it "should actually find content" do
+      expect(@listing.details.size).to eq -1
+    end
+
+  end
+
 end

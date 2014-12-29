@@ -43,21 +43,7 @@ module Attra
       }
     end
 
-    def next_url
-      # copy our uri so we don't fux with it
-      next_uri = self.uri.dup
-      # reconstruct query string from our attributes
-      next_uri.query = QS_KEYS.collect do |attribute, qs_key|
-        value = instance_variable_get("@#{attribute}")
-        # increment page number (or set to page 2 if not exists)
-        value = value.blank? ? 2 : value.to_i + 1 if attribute == :page
-        # return a key=value pair
-        "#{qs_key}=#{value}"
-      end.join("&")
-      return next_uri.to_s
-    end
-
-    def listings
+    def details
       # you can't send instance varialbes into Wombat block
       options = {
         base_url: self.base_url,
