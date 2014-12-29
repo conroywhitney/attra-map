@@ -46,19 +46,48 @@ module Attra
       }
     end
 
+    def self.section_labels
+      return {
+        contact: "Contact",
+        contact_phones: "Phone",
+        contact_emails: "Email",
+        website: "Website",
+        updated_on: "Last Updated",
+        description: "General Description",
+        internship_starts_on: "Internship Starts",
+        internship_ends_on: "Internship Ends",
+        num_interns: "Number of Interns",
+        app_deadline: "App Deadline",
+        minimum_stay_length: "Minimum Length of Stay",
+        meals: "Meals",
+        skills_desired: "Skills Desired",
+        educational_opportunities: "Educational Opportunities",
+        stipend: "Stipend",
+        housing: "Housing",
+        contact_method: "Preferred method Of Contact",
+        internship_details: "Internship Details"
+      }.reverse
+    end
+
     def crawl!
       doc = Nokogiri::HTML(open(self.url))
       base_xpath = "//div[@id='main_content']//table//tr[1]//td//table//tr//td"
 
-      sections = doc.xpath("#{base_xpath}//strong")
+      details  = doc.xpath("#{base_xpath}")
+      sections = details.xpath(".//strong")
+
+      0.upto(sections.length - 1) do |i|
+        elements = collect_between(sections[i], sections[i + 1])
+        puts "Section [#{sections[i]}] = [#{elements}]"
+      end
 
       self.title = sections.shift.content
 
-      sections.each_with_index do |section, i|
-        puts "Section [#{section.content}] = Content [#{content_between(section, section.next)}]"
-      end
-
       return nil
+    end
+
+    def parse(content, section)
+      puts content.to_s
     end
 
     def content_between(first, last)
