@@ -55,10 +55,15 @@ module Attra
       self.title = sections.shift.content
 
       sections.each_with_index do |section, i|
-        #puts "Section [#{section.content}] = Content [#{section.next.content}]"
+        puts "Section [#{section.content}] = Content [#{content_between(section, section.next)}]"
       end
 
       return nil
+    end
+
+    def content_between(first, last)
+      elements = collect_between(first, last)
+      return elements.collect{|e| e.content}.join("\t")
     end
 
     def collect_between(first, last)
