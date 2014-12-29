@@ -26,6 +26,30 @@ describe Attra::Listing do
     end
   end
 
+  context "attribute from element" do
+
+    before(:each) do
+      @listing = Attra::Listing.new(ROGUE_FARMS)
+    end
+
+    it "should handle perfectly clean" do
+      expect(@listing.get_attribute_from_element("App Deadline")).to eq :app_deadline
+    end
+
+    it "should handle whitespace no colon" do
+      expect(@listing.get_attribute_from_element("Minimum Length of Stay ")).to eq :minimum_stay_length
+    end
+
+    it "should handle colon no whitespace" do
+      expect(@listing.get_attribute_from_element("Housing:")).to eq :housing
+    end
+
+    it "should handle whitespace and colon" do
+      expect(@listing.get_attribute_from_element("Website: ")).to eq :website
+    end
+
+  end
+
   context "crawling" do
 
     before(:each) do
