@@ -5,6 +5,7 @@
 
 .search.page {
   overflow: hidden;
+  position: relative;
 }
 
 section.map {
@@ -51,11 +52,13 @@ section.map {
   margin-top: -1px;
   padding: 0px 0px 0px 0px;
   z-index: 999;
+  position: absolute;
+  top: 10px;
 }
 
 #stickyHeader {
   width: 100%;
-  position: static;
+  position: absolute;
   top: 0px;
 }
 
