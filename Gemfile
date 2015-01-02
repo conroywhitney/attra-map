@@ -24,10 +24,6 @@ gem 'nokogiri'
 # geocoding
 gem 'geocoder'
 
-group :assets do
-  gem 'uglifier'
-end
-
 # testing
 group :development, :test do
   gem "rspec-rails", ">= 2.12.2"
