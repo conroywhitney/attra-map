@@ -1,32 +1,36 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Search Apprenticeship Opportunities - ATTRA Map</title>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" href="/stylesheets/search.css">
+    <title>Search Apprenticeship Opportunities - ATTRA Map</title>
 
-  <!-- Root Libraries -->
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="//cdn.jsdelivr.net/algoliasearch/2.4.6/algoliasearch.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheets/search.css">
 
-  <!-- Angular -->
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
-  <script type="text/javascript" src="/javascripts/ng-infinite-scroll.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0-beta.3/angular-route.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0-beta.3/angular-sanitize.min.js"></script>
+    <!-- Root Libraries -->
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/algoliasearch/2.4.6/algoliasearch.min.js"></script>
 
-  <!-- Google Maps -->
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD505z9c96WLAdz4fgJ1FKa4wWOD--w8OA&amp;sensor=false"></script><!-- google maps -->
-  <script type="text/javascript" src="/javascripts/markerclusterer.min.js"></script>
+    <!-- Angular -->
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+    <script type="text/javascript" src="/javascripts/ng-infinite-scroll.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0-beta.3/angular-route.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0-beta.3/angular-sanitize.min.js"></script>
 
-  <!-- Application -->
-  <script type="text/javascript" src="/javascripts/search.js"></script>
+    <!-- Google Maps -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD505z9c96WLAdz4fgJ1FKa4wWOD--w8OA&amp;sensor=false"></script><!-- google maps -->
+    <script type="text/javascript" src="/javascripts/markerclusterer.min.js"></script>
 
-  <%= csrf_meta_tags %>
-</head>
+    <!-- Application -->
+    <script type="text/javascript" src="/javascripts/search.js"></script>
+
+    <%= csrf_meta_tags %>
+  </head>
 <body>
 
 <%= yield %>
