@@ -115,6 +115,7 @@ var app = angular.module('search', [
         $scope.searchbox.center = centerURL;
         $scope.searchbox.zoom   = zoom;
 
+        $location.search('keywords', $scope.searchbox.query);
         $location.search('center', centerURL);
         $location.search('zoom', zoom);
         $location.search('page', 1);
