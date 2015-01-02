@@ -4,14 +4,11 @@ require 'digest/md5'
 namespace :attra do
 
   desc "Pull all listings into database"
-  task :crawl, [] => :environment do |t, args|
-    attra_listings = []
-    all        = "https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&Go=Go"
-    oregon     = "https://attra.ncat.org/attra-pub/internships/search_results.php?State=OR"
-    washington = "https://attra.ncat.org/attra-pub/internships/search_results.php?State=WA"
-    california = "https://attra.ncat.org/attra-pub/internships/search_results.php?State=CA"
+  task :crawl, [:url] => :environment do |t, args|
+    args.with_defaults(:url => "https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&Go=Go")
 
-    serp_url = oregon
+    attra_listings = []
+    serp_url = args.url
 
     begin
       serp = Attra::Serp.where(digest: Digest::MD5.hexdigest(serp_url)).first_or_create do |serp|
