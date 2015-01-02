@@ -1,4 +1,5 @@
 class CrawledPage < ActiveRecord::Base
+
   attr_accessible \
     :type,
     :digest,

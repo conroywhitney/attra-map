@@ -21,6 +21,9 @@ gem 'mechanize'
 gem 'wombat'
 gem 'nokogiri'
 
+# geocoding
+gem 'geocoder'
+
 # testing
 group :development, :test do
   gem "rspec-rails", ">= 2.12.2"
