@@ -38,7 +38,3 @@ group :development, :test do
   gem "foreman"
   gem "figaro"
 end
-
-group :assets do
-  gem 'uglifier'
-end
