@@ -1,0 +1,108 @@
+<article class="search page">
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+    <div ng-app="search">
+      <div ng-controller="SearchCtrl">
+
+        <script type="text/ng-template" id="propertySearch.html">
+          <div infinite-scroll="paginate()">
+            <div class="listing" ng-repeat="listing in listings">
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="propertyItem">
+                    <div class="propertyContent propertyList row">
+                      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 tall">
+                        <a class="propertyType" href="#">{{ listing.product_type | uppercase }}</a>
+                        <a href="{{ listing.permalink }}" class="propertyImgLink center-cropped" style="background-image: url('{{ listing.thumbnail }}');">
+                        </a>
+                      </div>
+                      <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 rowText tall">
+                        <h3>
+                          <a href="{{ listing.permalink }}" ng-bind-html="listing._highlightResult.title.value"></a>
+                        </h3>
+                        <div class="divider"></div>
+                        <p class="address" ng-bind-html="listing._highlightResult.address.value"></p>
+                        <p class="forSale">{{ listing.offering | uppercase }}</p>
+                        <p class="price">{{ listing.price }}</p>
+                        <div class="description">
+                          <span ng-bind-html="listing._highlightResult.summary.value | limitTo: 200"></span>
+                          <span>{{listing._highlightResult.summary.value.length > 200 ? '...' : ''}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- /listing row -->
+            </div><!-- /listing -->
+
+            <div class="row" ng-show="!listings.length">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="propertyItem">
+                  <div class="propertyContent propertyList row">
+                    <h4 class="text-center vertical-center">No apprenticeship opportunities match your search.</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /infinite scroll -->
+        </script>
+
+        <section class="subHeader horizontalFilter" id="stickyHeader">
+        <div class="mapFilter">
+          <div class="filterHeader">
+            <ul class="filterNav">
+              <li>
+              <a class="current triangle" href="#">
+                <h2>
+                  <span ng-bind="hitCount"></span>
+                  Apprenticeship Opportunities
+                </h2>
+              </a>
+              </li>
+            </ul>
+          </div>
+          <div class="filterContent">
+            <%= render partial: "searchbox_horizontal" %>
+          </div><!-- END TAB 3 -->
+        </div><!-- end col -->
+        <div id="stickyPlaceholder"></div>
+        </section>
+
+        <!-- start subheader -->
+        <section class="subHeader map">
+        <div id="map-canvas"></div>
+        <div class="clearfix"></div>
+        </section><!-- end subheader section -->
+
+
+        <!-- start properties -->
+        <section class="properties">
+        <div class="container">
+
+          <div class="row">
+
+            <!-- start content -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                <div style="">
+                  <div ng-view></div>
+                </div>
+
+            </div><!-- end content -->
+
+          </div><!-- end row -->
+
+        </div><!-- end container -->
+        </section>
+        <!-- end properties -->
+
+
+      </div><!-- /ng-controller -->
+    </div><!-- /ng-app -->
+
+  </div><!-- /col -->
+</div><!-- /row -->
+</article>
+
