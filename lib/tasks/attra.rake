@@ -1,28 +1,46 @@
 require 'wombat'
+require 'digest/md5'
 
 namespace :attra do
 
   desc "Pull all listings into database"
   task :crawl, [] => :environment do |t, args|
-    listings = []
-    all = "https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&Go=Go"
-    oregon = "https://attra.ncat.org/attra-pub/internships/search_results.php?State=OR"
+    attra_listings = []
+    all        = "https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&Go=Go"
+    oregon     = "https://attra.ncat.org/attra-pub/internships/search_results.php?State=OR"
     washington = "https://attra.ncat.org/attra-pub/internships/search_results.php?State=WA"
     california = "https://attra.ncat.org/attra-pub/internships/search_results.php?State=CA"
 
-    serp = Attra::Serp.new(california)
-    while serp.valid? do
-      puts "Scanning URL [#{serp.url}]...\tFound [#{serp.listings.count}] listings..."
-      serp.listings.each do |url|
-        listings << Attra::Listing.new(url)
-      end
-      serp = Attra::Serp.new(serp.next_url)
-    end
+    serp_url = oregon
 
-    puts ["Address", "City", "State", "Zip", "Title", "URL"].join("\t")
-    listings.each do |listing|
-      listing.crawl!
-      puts [listing.address, listing.city, listing.state, listing.zip, listing.title, listing.url].join("\t")
+    begin
+      serp = Attra::Serp.where(digest: Digest::MD5.hexdigest(serp_url)).first_or_create do |serp|
+        serp.url = serp_url
+      end
+
+      serp_listings = serp.listings
+
+      puts "Scanning URL [#{serp.url}]...\tFound [#{serp_listings.count}] listings..."
+      serp_listings.each do |url|
+        attra_listings << Attra::Listing.where(digest: Digest::MD5.hexdigest(url)).first_or_create do |attra_listing|
+          attra_listing.url = url
+        end
+      end
+
+      serp_url = serp.next_url
+    end while serp_listings.count > 0
+
+    attra_listings.each do |attra_listing|
+      attra_listing.cached_or_crawl!
+
+      Listing.where(attra_id: attra_listing.attra_id).first_or_create do |listing|
+        begin
+          listing.from_attra(attra_listing)
+          listing.save!
+        rescue => e
+          puts "Error saving [#{attra_listing.attra_id}]"
+        end
+      end
     end
 
   end

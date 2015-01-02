@@ -27,10 +27,6 @@ module Attra
       }
     end
 
-    def valid?
-      self.listings.count > 0
-    end
-
     def next_url
       # copy our uri so we don't fux with it
       next_uri = self.uri.dup
