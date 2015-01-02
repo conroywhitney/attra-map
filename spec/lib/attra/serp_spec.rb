@@ -5,7 +5,7 @@ describe Attra::Serp do
   context "sanity check" do
 
     it "should initialize" do
-      expect { Attra::Serp.new("https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&page=4") }.to_not raise_error
+      expect { Attra::Serp.new(url: "https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&page=4") }.to_not raise_error
     end
 
   end
@@ -15,7 +15,7 @@ describe Attra::Serp do
     context "parsing" do
 
       before(:each) do
-        @serp = Attra::Serp.new("https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=test-farm-name&City=test-city&State=test-state&Keyword=test-keyword&allDate=test-all-date&page=test-page")
+        @serp = Attra::Serp.new(url: "https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=test-farm-name&City=test-city&State=test-state&Keyword=test-keyword&allDate=test-all-date&page=test-page")
       end
 
       it "should capture farm name" do
@@ -49,25 +49,13 @@ describe Attra::Serp do
   context "pagination" do
 
     it "should handle no page number" do
-      @serp = Attra::Serp.new("https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&Go=Go")
+      @serp = Attra::Serp.new(url: "https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&Go=Go")
       expect(@serp.next_url).to eq "https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&page=2"
     end
 
     it "should handle existing page number" do
-      @serp = Attra::Serp.new("https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&page=2")
+      @serp = Attra::Serp.new(url: "https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&page=2")
       expect(@serp.next_url).to eq "https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&page=3"
-    end
-
-  end
-
-  context "valid" do
-
-    it "should return true for normal page" do
-      expect(Attra::Serp.new("https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&page=4").valid?).to eq true
-    end
-
-    it "should return false for high number page" do
-      expect(Attra::Serp.new("https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&page=4000").valid?).to eq false
     end
 
   end
@@ -75,7 +63,7 @@ describe Attra::Serp do
   context "listings" do
 
     before(:each) do
-      @serp = Attra::Serp.new("https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&Go=Go")
+      @serp = Attra::Serp.new(url: "https://attra.ncat.org/attra-pub/internships/search_results.php?FarmName=&City=&State=&Keyword=&allDate=1&Go=Go")
     end
 
     it "should not error out" do
@@ -93,3 +81,4 @@ describe Attra::Serp do
   end
 
 end
+

@@ -1,22 +1,27 @@
 module Attra
-  class Page
+  class Page < CrawledPage
 
     DOMAIN = "attra.ncat.org"
 
     attr_accessor \
-      :url,
       :uri
 
-    def initialize(url)
-      url = "https://#{DOMAIN}/#{url}" unless url.include?("http")
+    after_initialize :clean_url
+    after_initialize :initialize_attributes
 
-      self.url = url
-      self.uri = URI.parse(url)
-
+    def initialize_attributes
       qs = CGI::parse(self.uri.query)
       self.class.qs_keys.each do |k,v|
         instance_variable_set("@#{k}", qs[self.class.qs_keys[k]].first)
       end
+    end
+
+    def uri
+      return URI.parse(self.url)
+    end
+
+    def clean_url
+      self.url = "https://#{DOMAIN}/#{self.url}" unless self.url.include?("http")
     end
 
     # abstract class

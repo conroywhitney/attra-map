@@ -33,9 +33,9 @@ module Attra
       :housing,
       :internship_details
 
-    def initialize(url)
-      url = "attra-pub/internships/#{url}" unless url.include?("attra-pub/internships/")
-      super(url)
+    def clean_url
+      self.url = "attra-pub/internships/#{self.url}" unless self.url.include?("attra-pub/internships/")
+      super
     end
 
     def self.qs_keys
@@ -73,13 +73,28 @@ module Attra
       }
     end
 
+    def cached_or_crawl!
+      self.crawl! if self.html.blank?
+      self.parse!
+    end
+
     def crawl!
       begin
-      doc = Nokogiri::HTML(open(self.url))
+        doc = Nokogiri::HTML(open(self.url))
       rescue OpenURI::HTTPError => e
         puts "Error opening [#{self.url}]: [#{e.message}]"
         raise e
       end
+
+      # cache
+      self.html = doc.to_s.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+      self.save!
+
+      self.parse!
+    end
+
+    def parse!
+      doc = Nokogiri::HTML(self.html)
 
       base_xpath = "//div[@id='main_content']//table//tr[1]//td//table//tr//td"
 
