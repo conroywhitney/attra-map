@@ -44,5 +44,14 @@ namespace :attra do
 
   end
 
+  desc "Go back through and re-parse / re-save everything"
+  task :refresh, [] => :environment do |t, args|
+    Attra::Listing.find_each do |listing|
+      listing.parse!
+      listing.save!
+    end
+  end
+
+
 end
 

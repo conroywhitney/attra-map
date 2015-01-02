@@ -22,7 +22,8 @@ class Listing < ActiveRecord::Base
     :skills_desired,
     :educational_opportunities,
     :stipend,
-    :housing
+    :housing,
+    :fulltext_search
 
   geocoded_by :postal_address, :latitude => :lat, :longitude => :lon
 
@@ -50,7 +51,7 @@ class Listing < ActiveRecord::Base
 
   def from(source)
     attributes = Hash.new
-    [:title, :address, :city, :state, :zip, :contact, :contact_phones, :contact_emails, :contact_method, :website, :updated_on, :description, :internship_starts_on, :internship_ends_on, :num_interns, :app_deadline, :minimum_stay_length, :meals, :skills_desired, :educational_opportunities, :stipend, :housing].each do |attr|
+    [:title, :address, :city, :state, :zip, :contact, :contact_phones, :contact_emails, :contact_method, :website, :updated_on, :description, :internship_starts_on, :internship_ends_on, :num_interns, :app_deadline, :minimum_stay_length, :meals, :skills_desired, :educational_opportunities, :stipend, :housing, :fulltext_search].each do |attr|
       attributes[attr] = source.send(attr)
     end
     self.update_attributes!(attributes)

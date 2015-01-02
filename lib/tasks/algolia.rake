@@ -3,8 +3,9 @@ namespace :algolia do
   desc "Refresh (destroy + create) all entries"
   task :refresh, [] => :environment do |t, args|
     puts "Refreshing algolia ..."
-    # don't need to destroy -- #reindex! will destroy old index
-    # Rake::Task['algolia:destroy'].execute
+    # destroying first because received this great error...
+    # Algolia::AlgoliaProtocolError: Cannot POST to https://4FQPTMXLRJ-2.algolia.net/1/indexes/Listing_development/batch: {"message":"Record quota exceeded, change plan or delete records."} (403)
+    Rake::Task['algolia:destroy'].execute
     Rake::Task['algolia:create'].execute
     puts "... done"
   end

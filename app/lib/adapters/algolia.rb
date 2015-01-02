@@ -38,6 +38,7 @@ module Adapters
         :permalink,
         :title,
         :address,
+        :fulltext,
         :lat,
         :lon
 
@@ -74,6 +75,10 @@ module Adapters
 
     def address
       return self.listing.postal_address
+    end
+
+    def fulltext
+      return self.listing.fulltext_search
     end
 
 =begin

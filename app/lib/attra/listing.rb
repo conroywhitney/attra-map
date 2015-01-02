@@ -31,7 +31,8 @@ module Attra
       :educational_opportunities,
       :stipend,
       :housing,
-      :internship_details
+      :internship_details,
+      :fulltext_search
 
     after_initialize :parse!
 
@@ -105,7 +106,10 @@ module Attra
       details  = doc.xpath("#{base_xpath}")
       sections = details.xpath(".//strong")
 
-      self.title = sections.shift.content
+      # update attributes as we figure them out
+      self.source_id       = self.attra_id
+      self.title           = sections.shift.content
+      self.fulltext_search = details.to_s
 
       current_attribute = nil
       details.children.each do |element|
