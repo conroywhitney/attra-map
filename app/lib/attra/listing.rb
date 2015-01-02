@@ -89,6 +89,12 @@ module Attra
       self.html = doc.to_s.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
       self.save!
 
+      self.parse!
+    end
+
+    def parse!
+      doc = Nokogiri::HTML(self.html)
+
       base_xpath = "//div[@id='main_content']//table//tr[1]//td//table//tr//td"
 
       details  = doc.xpath("#{base_xpath}")

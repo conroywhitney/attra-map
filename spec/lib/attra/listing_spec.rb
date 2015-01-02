@@ -7,7 +7,7 @@ describe Attra::Listing do
   context "sanity check" do
 
     it "should initialize" do
-      expect { Attra::Listing.new(ROGUE_FARMS) }.to_not raise_error
+      expect { Attra::Listing.new(url: ROGUE_FARMS) }.to_not raise_error
     end
 
   end
@@ -16,17 +16,17 @@ describe Attra::Listing do
     context "url" do
 
       before(:each) do
-        @listing = Attra::Listing.new(ROGUE_FARMS)
+        @listing = Attra::Listing.new(url: ROGUE_FARMS)
       end
 
       it "should add on directory if not included" do
         url = "farmdetails.php?FarmName=&City=&State=OR&Keyword=&allDate=0&page=1&FarmID=3391"
-        expect(Attra::Listing.new(url).url).to eq ROGUE_FARMS
+        expect(Attra::Listing.new(url: url).url).to eq ROGUE_FARMS
       end
 
       it "should not add on directory if already included" do
         url = "attra-pub/internships/farmdetails.php?FarmName=&City=&State=OR&Keyword=&allDate=0&page=1&FarmID=3391"
-        expect(Attra::Listing.new(url).url).to eq ROGUE_FARMS
+        expect(Attra::Listing.new(url: url).url).to eq ROGUE_FARMS
       end
 
     end
@@ -36,7 +36,7 @@ describe Attra::Listing do
     context "parsing" do
 
       before(:each) do
-        @listing = Attra::Listing.new(ROGUE_FARMS)
+        @listing = Attra::Listing.new(url: ROGUE_FARMS)
       end
 
       it "should capture attra id" do
@@ -49,7 +49,7 @@ describe Attra::Listing do
   context "attribute from element" do
 
     before(:each) do
-      @listing = Attra::Listing.new(ROGUE_FARMS)
+      @listing = Attra::Listing.new(url: ROGUE_FARMS)
     end
 
     it "should handle perfectly clean" do
@@ -73,7 +73,7 @@ describe Attra::Listing do
   context "parse_address" do
 
     before(:each) do
-      @listing = Attra::Listing.new(ROGUE_FARMS)
+      @listing = Attra::Listing.new(url: ROGUE_FARMS)
     end
 
     it "should set the address attribute" do
@@ -92,7 +92,7 @@ describe Attra::Listing do
 
     context "in a perfect world" do
       before(:each) do
-        @listing = Attra::Listing.new(ROGUE_FARMS)
+        @listing = Attra::Listing.new(url: ROGUE_FARMS)
         @listing.parse_city_state_zip("Asheville, NC 28803")
       end
 
@@ -111,7 +111,7 @@ describe Attra::Listing do
 
     context "when city has more than one word" do
       before(:each) do
-        @listing = Attra::Listing.new("https://attra.ncat.org/attra-pub/internships/farmdetails.php?FarmName=&City=&State=WA&Keyword=&allDate=0&page=1&FarmID=1620")
+        @listing = Attra::Listing.new(url: "https://attra.ncat.org/attra-pub/internships/farmdetails.php?FarmName=&City=&State=WA&Keyword=&allDate=0&page=1&FarmID=1620")
         @listing.crawl!
       end
 
@@ -132,7 +132,7 @@ describe Attra::Listing do
 
   context "full address" do
     before(:each) do
-      @listing = Attra::Listing.new(ROGUE_FARMS)
+      @listing = Attra::Listing.new(url: ROGUE_FARMS)
       @listing.crawl!
     end
 
@@ -144,7 +144,7 @@ describe Attra::Listing do
   context "concatenate_attribute" do
 
     before(:each) do
-      @listing = Attra::Listing.new(ROGUE_FARMS)
+      @listing = Attra::Listing.new(url: ROGUE_FARMS)
     end
 
     it "should handle nil initially" do
@@ -173,7 +173,7 @@ describe Attra::Listing do
   context "crawling" do
 
     before(:each) do
-      @listing = Attra::Listing.new(ROGUE_FARMS)
+      @listing = Attra::Listing.new(url: ROGUE_FARMS)
       @listing.crawl!
     end
 
@@ -204,3 +204,4 @@ describe Attra::Listing do
   end
 
 end
+

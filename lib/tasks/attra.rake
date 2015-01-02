@@ -33,13 +33,12 @@ namespace :attra do
     attra_listings.each do |attra_listing|
       attra_listing.cached_or_crawl!
 
-      Listing.where(attra_id: attra_listing.attra_id).first_or_create do |listing|
-        begin
-          listing.from_attra(attra_listing)
-          listing.save!
-        rescue => e
-          puts "Error saving [#{attra_listing.attra_id}]"
-        end
+      listing = Listing.where(attra_id: attra_listing.attra_id).first_or_create
+      begin
+        listing.from_attra(attra_listing)
+        listing.save!
+      rescue => e
+        puts "Error saving [#{attra_listing.attra_id}]"
       end
     end
 
