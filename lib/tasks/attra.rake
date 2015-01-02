@@ -35,10 +35,10 @@ namespace :attra do
 
       listing = Listing.where(attra_id: attra_listing.attra_id).first_or_create
       begin
-        listing.from_attra(attra_listing)
+        listing.from(attra_listing)
         listing.save!
       rescue => e
-        puts "Error saving [#{attra_listing.attra_id}]"
+        puts "Error saving [#{attra_listing.attra_id}]: [#{e.message}]"
       end
     end
 

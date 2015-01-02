@@ -74,7 +74,8 @@ module Attra
     end
 
     def cached_or_crawl!
-      return self.html.blank? ? self.crawl! : self.html
+      self.crawl! if self.html.blank?
+      self.parse!
     end
 
     def crawl!
