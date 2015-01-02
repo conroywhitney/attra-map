@@ -33,6 +33,8 @@ module Attra
       :housing,
       :internship_details
 
+    after_initialize :parse!
+
     def clean_url
       self.url = "attra-pub/internships/#{self.url}" unless self.url.include?("attra-pub/internships/")
       super
@@ -94,6 +96,8 @@ module Attra
     end
 
     def parse!
+      return false if self.html.blank?
+
       doc = Nokogiri::HTML(self.html)
 
       base_xpath = "//div[@id='main_content']//table//tr[1]//td//table//tr//td"

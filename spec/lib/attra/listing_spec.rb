@@ -170,6 +170,17 @@ describe Attra::Listing do
 
   end
 
+  context "tite" do
+
+    it "should handle multiline break" do
+      @listing = FactoryGirl.create(:attra_newline)
+      @listing.parse!
+      puts "\n\n\n\n\n\n\n HEY \\n\n\nn\n\n\n\n\n\n [#{@listing.to_json}]\n\nn\n\n\n\n\n"
+      expect(@listing.title).to eq "Jones Family Farms Nick and Sara Jones"
+    end
+
+  end
+
   context "crawling" do
 
     before(:each) do
